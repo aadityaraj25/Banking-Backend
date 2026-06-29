@@ -1,6 +1,7 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import { userModel } from '../model/user.models.js'
+import { sendRegisterEmail } from '../services/email.service.js';
 
 export const userRegister = async(req,res) => {
     try {
@@ -33,7 +34,9 @@ export const userRegister = async(req,res) => {
         )
 
         res.cookie("token",token)
+        sendRegisterEmail(user.email,user.name)
         res.status(201).json({user:user,token:token,message:"User Created Successfully"})
+
 
     } catch (error) {
         console.error(error)
@@ -52,7 +55,7 @@ export const userLogin = async(req,res) => {
             return res.status(401).json({message:"Email is not registered"})
         }
 
-        const isValid = user.comparePassword(password)
+        const isValid = await user.comparePassword(password)
         if(!isValid){
             return res.status(401).json({
                 message:"Password is incorrect",
