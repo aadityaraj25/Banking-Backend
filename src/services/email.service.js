@@ -70,3 +70,77 @@ export const sendRegisterEmail = async (userEmail, name) => {
 
     await sendEmail(userEmail, subject, text, html);
 };
+
+export const sendTransactionEmail = async (userEmail, name, amount, transactionDetails) => {
+    const subject = "Transaction Notification";
+    const text = `
+                Hi ${name},
+                A transaction has been made from your account.
+                Transaction Details:
+                - From Account: ${transactionDetails.fromAccount}
+                - To Account: ${transactionDetails.toAccount}
+                - Amount: ${transactionDetails.amount}
+                - Status: ${transactionDetails.status}
+                
+                If you did not authorize this transaction, please contact our support team immediately.
+                
+                Best Regards,
+                The Hirex Team
+                `;
+
+    const html = `
+                <h2>Transaction Notification</h2>
+                <p>Hi <strong>${name}</strong>,</p>
+                <p>A transaction has been made from your account.</p>
+                <h3>Transaction Details:</h3>
+                <ul>
+                    <li><strong>From Account:</strong> ${transactionDetails.fromAccount}</li>
+                    <li><strong>To Account:</strong> ${transactionDetails.toAccount}</li>
+                    <li><strong>Amount:</strong> ${transactionDetails.amount}</li>
+                    <li><strong>Status:</strong> ${transactionDetails.status}</li>
+                </ul>
+                <p>If you did not authorize this transaction, please contact our support team immediately.</p>
+                <br/>
+                <p>Best Regards,</p>
+                <p><strong>The Hirex Team</strong></p>
+                `;
+
+    await sendEmail(userEmail, subject, text, html);
+};
+
+export const  sendTransactionFailureEmail = async (userEmail, name, amount, transactionDetails) => {
+    const subject = "Transaction Failure Notification";
+    const text = `
+                Hi ${name},
+                We regret to inform you that a transaction from your account has failed.
+                Transaction Details:
+                - From Account: ${transactionDetails.fromAccount}
+                - To Account: ${transactionDetails.toAccount}
+                - Amount: ${transactionDetails.amount}
+                - Status: ${transactionDetails.status}
+                
+                Please review the transaction details and try again. If you need assistance, feel free to contact our support team.
+                
+                Best Regards,
+                The Hirex Team
+                `;
+
+    const html = `
+                <h2>Transaction Failure Notification</h2>
+                <p>Hi <strong>${name}</strong>,</p>
+                <p>We regret to inform you that a transaction from your account has failed.</p>
+                <h3>Transaction Details:</h3>
+                <ul>
+                    <li><strong>From Account:</strong> ${transactionDetails.fromAccount}</li>
+                    <li><strong>To Account:</strong>  ${transactionDetails.toAccount}</li>
+                    <li><strong>Amount:</strong> ${transactionDetails.amount}</li>
+                    <li><strong>Status:</strong> ${transactionDetails.status}</li>
+                </ul>
+                <p>Please review the transaction details and try again. If you need assistance, feel free to contact our support team.</p>
+                <br/>
+                <p>Best Regards,</p>
+                <p><strong>The Hirex Team</strong></p>
+                `;
+
+    await sendEmail(userEmail, subject, text, html);
+};
