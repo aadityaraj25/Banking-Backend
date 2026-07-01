@@ -11,6 +11,6 @@ app.use(cookieParser())
 
 // routes
 app.use("/api/auth",authRouter)
-app.use("api/accounts",authMiddleware,accountRouter)
+app.use("/api/accounts",authMiddleware,accountRouter)
 
 export default app;
